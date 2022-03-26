@@ -1,2 +1,2 @@
 # eloquent
-Solutions for the exercises in the book Eloquent JavaScript by @marijnh
+Solutions for the exercises in the book Eloquent JavaScript by Marijn Haverbeke.
