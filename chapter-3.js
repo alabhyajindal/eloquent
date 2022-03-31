@@ -1,3 +1,5 @@
+// Examples
+
 // const hummus = function (factor) {
 //   const ingredient = function (amount, unit, name) {
 //     let ingredientAmount = amount * factor;
@@ -37,18 +39,26 @@
 // console.log(twice(5));
 // console.log(thrice(5));
 
-function printFarmInventory(cows, chickens, pigs) {
-  zeroes(cows, "Cows");
-  zeroes(chickens, "Chickens");
-  zeroes(pigs, "Pigs");
-}
+// function printFarmInventory(cows, chickens, pigs) {
+//   zeroes(cows, "Cows");
+//   zeroes(chickens, "Chickens");
+//   zeroes(pigs, "Pigs");
+// }
 
-function zeroes(animalCount, animal) {
-  let animalString = String(animalCount);
-  while (animalString.length < 3) {
-    animalString = "0" + animalString;
-  }
-  console.log(`${animalString} ${animal}`);
-}
+// function zeroes(animalCount, animal) {
+//   let animalString = String(animalCount);
+//   while (animalString.length < 3) {
+//     animalString = "0" + animalString;
+//   }
+//   console.log(`${animalString} ${animal}`);
+// }
 
-printFarmInventory(7, 11, 3);
+// printFarmInventory(7, 11, 3);
+
+// Minimum
+const min = function (a, b) {
+  return a < b ? a : b;
+};
+
+console.log(min(0, 10));
+console.log(min(0, -10));
