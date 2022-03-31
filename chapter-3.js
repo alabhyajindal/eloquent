@@ -56,9 +56,22 @@
 // printFarmInventory(7, 11, 3);
 
 // Minimum
-const min = function (a, b) {
-  return a < b ? a : b;
+// const min = function (a, b) {
+//   return a < b ? a : b;
+// };
+
+// console.log(min(0, 10));
+// console.log(min(0, -10));
+
+// Recursion
+const isEven = function (n) {
+  if (Math.abs(n) === 0) {
+    return true;
+  } else if (Math.abs(n) === 1) {
+    return false;
+  } else {
+    return isEven(Math.abs(n) - 2);
+  }
 };
 
-console.log(min(0, 10));
-console.log(min(0, -10));
+console.log(isEven(-1));
