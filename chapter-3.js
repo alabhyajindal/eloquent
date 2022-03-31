@@ -64,14 +64,40 @@
 // console.log(min(0, -10));
 
 // Recursion
-const isEven = function (n) {
-  if (Math.abs(n) === 0) {
-    return true;
-  } else if (Math.abs(n) === 1) {
-    return false;
-  } else {
-    return isEven(Math.abs(n) - 2);
+// const isEven = function (n) {
+//   if (Math.abs(n) === 0) {
+//     return true;
+//   } else if (Math.abs(n) === 1) {
+//     return false;
+//   } else {
+//     return isEven(Math.abs(n) - 2);
+//   }
+// };
+
+// console.log(isEven(-1));
+
+// Bean Counting
+// const countBs = function (str) {
+//   let count = 0;
+//   for (let i = 0; i < str.length; i++) {
+//     str[i] === "B" && count++;
+//   }
+//   return count;
+// };
+
+const countChar = function (str, char) {
+  let count = 0;
+  for (let i = 0; i < str.length; i++) {
+    str[i] === char && count++;
   }
+  return count;
 };
 
-console.log(isEven(-1));
+// console.log(countBs("BBC"));
+// console.log(countChar("kakkerlak", "k"));
+
+const countBs = function (str) {
+  return countChar(str, "B");
+};
+
+console.log(countBs("BBC"));
