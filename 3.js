@@ -85,19 +85,19 @@
 //   return count;
 // };
 
-const countChar = function (str, char) {
-  let count = 0;
-  for (let i = 0; i < str.length; i++) {
-    str[i] === char && count++;
-  }
-  return count;
-};
+// const countChar = function (str, char) {
+//   let count = 0;
+//   for (let i = 0; i < str.length; i++) {
+//     str[i] === char && count++;
+//   }
+//   return count;
+// };
+
+// // console.log(countBs("BBC"));
+// // console.log(countChar("kakkerlak", "k"));
+
+// const countBs = function (str) {
+//   return countChar(str, "B");
+// };
 
 // console.log(countBs("BBC"));
-// console.log(countChar("kakkerlak", "k"));
-
-const countBs = function (str) {
-  return countChar(str, "B");
-};
-
-console.log(countBs("BBC"));
