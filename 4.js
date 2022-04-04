@@ -1,6 +1,6 @@
 // const obj = { left: 1, right: undefined };
 
-const JOURNAL = require("./journal.js");
+// const JOURNAL = require("./journal.js");
 
 // console.log(Object.keys(obj));
 
@@ -37,8 +37,28 @@ const JOURNAL = require("./journal.js");
 
 // console.log(remove(["a", "b", "c", "d", "e"], 2));
 
-const myArray = ["a", "b", "c"];
-const fooArray = myArray.concat(["d"]);
+// const myArray = ["a", "b", "c"];
+// const fooArray = myArray.concat(["d"]);
 
-console.log(myArray);
-console.log(fooArray);
+// console.log(myArray);
+// console.log(fooArray);
+
+// console.log("6".padStart(3, "0"));
+
+// const max = function (...numbers) {
+//   let result = 0;
+//   for (let number of numbers) {
+//     if (number > result) result = number;
+//   }
+//   return result;
+// };
+
+// let numbers = [5, 1, 7];
+// console.log(max(8, ...numbers, 44, 2));
+
+// console.log(Math.PI);
+
+// let { name } = { godMode: true, name: "Alabhya Jindal" };
+// console.log(name);
+
+// The Sum of a Range
