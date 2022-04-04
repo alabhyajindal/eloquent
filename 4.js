@@ -62,3 +62,39 @@
 // console.log(name);
 
 // The Sum of a Range
+// console.log(sum([1, 2, 3]));
+
+// const foo = function (bar) {
+//   console.log(bar);
+// };
+
+// foo([1, 2, 3, 4, 5]);
+
+// const range = function (start, end, step = 1) {
+//   const result = [];
+//   // if (step > 0) {
+//   //   for (let i = start; i <= end; i += step) {
+//   //     result.push(i);
+//   //   }
+//   // } else {
+//   //   for (let i = start; i >= end; i += step) {
+//   //     result.push(i);
+//   //   }
+//   // }
+//   for (let i = start; step > 0 ? i <= end : i >= end; i += step) {
+//     result.push(i);
+//   }
+//   return result;
+// };
+
+// console.log(range(5, 2, -1));
+
+// const sum = function (numbers) {
+//   let result = 0;
+//   for (let number of numbers) {
+//     result += number;
+//   }
+//   return result;
+// };
+
+// console.log(sum(range(1, 10)));
