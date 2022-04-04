@@ -98,3 +98,27 @@
 // };
 
 // console.log(sum(range(1, 10)));
+
+// Reversing an Array
+
+// const reverseArray = function (arr) {
+//   const result = [];
+//   for (let item of arr) {
+//     result.unshift(item);
+//   }
+//   return result;
+// };
+// // console.log(reverseArray(["A", "B", "C"]));
+
+// const reverseArrayInPlace = function (arr) {
+//   for (let i = 0; i < Math.floor(arr.length / 2); i++) {
+//     const last = arr[arr.length - 1 - i];
+//     arr[arr.length - 1 - i] = arr[i];
+//     arr[i] = last;
+//   }
+//   return arr;
+// };
+
+// let arrayValue = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+// reverseArrayInPlace(arrayValue);
+// console.log(arrayValue);
