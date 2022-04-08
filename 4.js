@@ -122,3 +122,73 @@
 // let arrayValue = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 // reverseArrayInPlace(arrayValue);
 // console.log(arrayValue);
+
+// A List
+// let list = {
+//   value: 1,
+//   rest: {
+//     value: 2,
+//     rest: {
+//       value: 3,
+//       rest: null,
+//     },
+//   },
+// };
+
+// const foo = { value: 0, rest: list };
+// const bar = { value: -1, rest: list };
+
+// console.log(foo);
+// console.log(bar);
+
+const arrayToList = function (arr) {
+  let list = null;
+  for (let i = arr.length - 1; i >= 0; i--) {
+    list = { value: arr[i], rest: list };
+  }
+  return list;
+};
+
+const listToArray = function (list) {
+  let result = [];
+  const recurse = function (list) {
+    if (typeof list != "object" || list === null) {
+      return result;
+    } else {
+      result.push(list.value);
+      recurse(list.rest);
+    }
+  };
+  recurse(list);
+  return result;
+};
+
+const prepend = function (element, list) {
+  return { value: element, rest: list };
+};
+
+const nth = function (list, index) {
+  let count = 0;
+  const recurse = function (list, index) {
+    if (count === index) {
+      return list.value;
+    } else {
+      count++;
+      return recurse(list.rest, index);
+    }
+  };
+  return recurse(list, index);
+};
+
+// console.log(arrayToList([10, 20, 30]));
+
+// console.log(
+// listToArray({
+//   value: 10,
+//   rest: { value: 20, rest: { value: 30, rest: null } },
+// })
+// );
+
+// console.log(prepend(10, prepend(20, null)));
+
+// console.log(nth(arrayToList([10, 20, 30]), 1));
