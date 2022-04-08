@@ -149,46 +149,80 @@ const arrayToList = function (arr) {
   return list;
 };
 
-const listToArray = function (list) {
-  let result = [];
-  const recurse = function (list) {
-    if (typeof list != "object" || list === null) {
-      return result;
-    } else {
-      result.push(list.value);
-      recurse(list.rest);
-    }
-  };
-  recurse(list);
-  return result;
-};
+// const listToArray = function (list) {
+//   let result = [];
+//   const recurse = function (list) {
+//     if (typeof list != "object" || list === null) {
+//       return result;
+//     } else {
+//       result.push(list.value);
+//       recurse(list.rest);
+//     }
+//   };
+//   recurse(list);
+//   return result;
+// };
 
-const prepend = function (element, list) {
-  return { value: element, rest: list };
-};
+// The solution as shown in the hints by the author
+// const listToArray = function (list) {
+//   const result = [];
+//   for (let node = list; node; node = node.rest) {
+//     result.push(node.value);
+//   }
+//   return result;
+// };
 
-const nth = function (list, index) {
-  let count = 0;
-  const recurse = function (list, index) {
-    if (count === index) {
-      return list.value;
-    } else {
-      count++;
-      return recurse(list.rest, index);
-    }
-  };
-  return recurse(list, index);
-};
+// const prepend = function (element, list) {
+//   return { value: element, rest: list };
+// };
+
+// const nth = function (list, index) {
+//   let count = 0;
+//   const recurse = function (list, index) {
+//     if (count === index) {
+//       return list.value;
+//     } else {
+//       count++;
+//       return recurse(list.rest, index);
+//     }
+//   };
+//   return recurse(list, index);
+// };
+
+// As shown by the author in the hint
+// const nth = function (list, index) {
+//   let count = 0;
+//   for (let node = list; node; node = node.rest) {
+//     if (count === index) {
+//       return node.value;
+//     } else {
+//       count++;
+//     }
+//   }
+// };
 
 // console.log(arrayToList([10, 20, 30]));
 
 // console.log(
-// listToArray({
-//   value: 10,
-//   rest: { value: 20, rest: { value: 30, rest: null } },
-// })
+//   listToArray({
+//     value: 10,
+//     rest: { value: 20, rest: { value: 30, rest: null } },
+//   })
 // );
 
 // console.log(prepend(10, prepend(20, null)));
 
 // console.log(nth(arrayToList([10, 20, 30]), 1));
+
+// Deep Comparison
+const deepEqual = function (val1, val2) {
+  const keys = Object.keys(val1);
+  const keyLength = Object.keys(val1).length;
+  for (let i = 0; i <= keyLength - 1; i++) {
+    console.log(val1[keys[i]]);
+  }
+};
+
+const obj1 = { here: { is: "an" }, object: 2 };
+const obj2 = { here: { was: "an" }, object: 2 };
+console.log(deepEqual(obj1, obj2));
