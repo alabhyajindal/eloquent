@@ -215,14 +215,54 @@ const arrayToList = function (arr) {
 // console.log(nth(arrayToList([10, 20, 30]), 1));
 
 // Deep Comparison
+
 const deepEqual = function (val1, val2) {
-  const keys = Object.keys(val1);
-  const keyLength = Object.keys(val1).length;
-  for (let i = 0; i <= keyLength - 1; i++) {
-    console.log(val1[keys[i]]);
+  // Storing the value of Object.keys in variables to make the code less verbose
+  let keys1 = Object.keys(val1);
+  let keys2 = Object.keys(val2);
+  // Value to check if the both the objects contain identical keys
+  let count = 0;
+
+  // Checking if the inputs are objects
+  if (
+    typeof val1 == "object" &&
+    val1 != null &&
+    typeof val2 == "object" &&
+    val2 != null
+  ) {
+    // Checking if the objects have same number of keys
+    if (keys1.length === keys2.length) {
+      // Looping over the keys array of the first input
+      for (let i = 0; i < keys1.length; i++) {
+        // Checking if the current key of the second input is present in the keys array of the first input
+        if (keys1.includes(keys2[i])) {
+          // Adding one to the count
+          count++;
+        }
+      }
+      // If count is equal to the length of the second (or first) keys length then it means that both the objects have identical keys
+      if (count === keys2.length) {
+        const propCheck = function(val1, val2) {
+          if (
+            typeof val1 == "object" &&
+            val1 != null &&
+            typeof val2 == "object" &&
+            val2 != null
+          ) {
+            // Insert a for loop, the value of the loop counter gets preserved
+            return propCheck(val1[keys1[  ]])
+          }
+        }
+        // If the objects don't have identical keys then we can return false, there is no need to check for their properties
+      } else {
+        return false;
+      }
+    }
+  } else {
+    return val1 === val2;
   }
 };
 
 const obj1 = { here: { is: "an" }, object: 2 };
-const obj2 = { here: { was: "an" }, object: 2 };
+const obj2 = { here: { is: "an" }, object: 2 };
 console.log(deepEqual(obj1, obj2));
