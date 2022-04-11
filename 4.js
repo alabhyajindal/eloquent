@@ -415,22 +415,28 @@
 
 // Attempting Deep Equal again after looking at the solution provided by the author
 const deepEqual = function (a, b) {
+  // If the values compare directly then true is returned
   if (a === b) return true;
+  // If the value is null or if the value is not an object then false is returned. We are checking if the value is not an object and returning false because if it's not and is equal then it would have returned true above.
   if (a == null || typeof a != "object" || b == null || typeof b != "object")
     return false;
+  // Assigning the keys of both parameters for easier readability
   let keysA = Object.keys(a),
     keysB = Object.keys(b);
+  // Checking if both the objects have same number of keys
+  if (keysA.length != keysB.length) return false;
+  // Looping over one of the key arrays
   for (let key of keysA) {
-    if (!keysB.includes(key) || !deepEqual(keysA[key], keysB[key]))
-      return false;
+    // If the key is not present in the other key array || the recursive call to deep equal is not true, then return false
+    // I was writing the below statement incorrectly and failed to debug it after multiple attempts. I was trying to do:
+    // if (!keysB.includes(key) || !deepEqual(keysA[key], keysB[key])) return false;
+    // While debugging I noticed that the recursive deepEqual call was passing undefined as parameters but couldn't figure out why. I had to see the author's solution again to find my mistake.
+    if (!keysB.includes(key) || !deepEqual(a[key], b[key])) return false;
   }
+  // Final return statment. If the call execution reaches to this point it means that none of the false statemens got executed, hence returning true.
   return true;
 };
 
 let obj = { here: { is: "an" }, object: 2 };
-console.log(deepEqual(obj, obj));
-// → true
 console.log(deepEqual(obj, { here: 1, object: 2 }));
 // → false
-console.log(deepEqual(obj, { here: { is: "an" }, object: 2 }));
-// → true
