@@ -1,6 +1,6 @@
 // const obj = { left: 1, right: undefined };
 
-// const JOURNAL = require("./journal.js");
+// const JOURNAL = require("./support/journal.js");
 
 // console.log(Object.keys(obj));
 
@@ -141,13 +141,13 @@
 // console.log(foo);
 // console.log(bar);
 
-const arrayToList = function (arr) {
-  let list = null;
-  for (let i = arr.length - 1; i >= 0; i--) {
-    list = { value: arr[i], rest: list };
-  }
-  return list;
-};
+// const arrayToList = function (arr) {
+//   let list = null;
+//   for (let i = arr.length - 1; i >= 0; i--) {
+//     list = { value: arr[i], rest: list };
+//   }
+//   return list;
+// };
 
 // const listToArray = function (list) {
 //   let result = [];
@@ -216,53 +216,221 @@ const arrayToList = function (arr) {
 
 // Deep Comparison
 
-const deepEqual = function (val1, val2) {
-  // Storing the value of Object.keys in variables to make the code less verbose
-  let keys1 = Object.keys(val1);
-  let keys2 = Object.keys(val2);
-  // Value to check if the both the objects contain identical keys
-  let count = 0;
+// My final solution before giving up. I rewrote this 10+ times over 3 days and still was not able to make it work. Comparing the property, if the property is an object is the point where I kept on failing. I finally had to look at the solution provided by the author.
+// const deepEqual = function (val1, val2) {
+//   // Storing the value of Object.keys in variables to make the code less verbose
+//   let keys1 = Object.keys(val1);
+//   let keys2 = Object.keys(val2);
+//   // Value to check if the both the objects contain identical keys
+//   let count = 0;
 
-  // Checking if the inputs are objects
-  if (
-    typeof val1 == "object" &&
-    val1 != null &&
-    typeof val2 == "object" &&
-    val2 != null
-  ) {
-    // Checking if the objects have same number of keys
-    if (keys1.length === keys2.length) {
-      // Looping over the keys array of the first input
-      for (let i = 0; i < keys1.length; i++) {
-        // Checking if the current key of the second input is present in the keys array of the first input
-        if (keys1.includes(keys2[i])) {
-          // Adding one to the count
-          count++;
-        }
-      }
-      // If count is equal to the length of the second (or first) keys length then it means that both the objects have identical keys
-      if (count === keys2.length) {
-        const propCheck = function(val1, val2) {
-          if (
-            typeof val1 == "object" &&
-            val1 != null &&
-            typeof val2 == "object" &&
-            val2 != null
-          ) {
-            // Insert a for loop, the value of the loop counter gets preserved
-            return propCheck(val1[keys1[  ]])
-          }
-        }
-        // If the objects don't have identical keys then we can return false, there is no need to check for their properties
-      } else {
-        return false;
-      }
-    }
-  } else {
-    return val1 === val2;
+//   // Checking if the inputs are objects
+//   if (
+//     typeof val1 == "object" &&
+//     val1 != null &&
+//     typeof val2 == "object" &&
+//     val2 != null
+//   ) {
+//     // Checking if the objects have same number of keys
+//     if (keys1.length === keys2.length) {
+//       // Looping over the keys array of the first input
+//       for (let i = 0; i < keys1.length; i++) {
+//         // Checking if the current key of the second input is present in the keys array of the first input
+//         if (keys1.includes(keys2[i])) {
+//           // Adding one to the count
+//           count++;
+//         }
+//       }
+//       // If count is equal to the length of the second (or first) keys length then it means that both the objects have identical keys
+//       if (count === keys2.length) {
+//         // It is the code below that should check the properties of objects in a recursive manner (it should deal with values which are objects themselves)
+//         const propCheck = function (val1, val2) {
+//           if (
+//             typeof val1 == "object" &&
+//             val1 != null &&
+//             typeof val2 == "object" &&
+//             val2 != null
+//           ) {
+//             // For loop, the value of the loop counter gets preserved
+//             for (let key of keys1) {
+//               return propCheck(val1[key], val2[key]);
+//             }
+//           } else {
+//             return val1 === val2;
+//           }
+//         };
+//         return propCheck(val1, val2);
+//         // If the objects don't have identical keys then we can return false, there is no need to check for their properties
+//       } else {
+//         return false;
+//       }
+//     }
+//   } else {
+//     return val1 === val2;
+//   }
+// };
+
+// const obj1 = { here: { is: "wow" }, object: 2 };
+// const obj2 = { here: { is: "an" }, object: 2 };
+// console.log(deepEqual(obj1, obj2));
+
+// The solution as provided by the author
+
+// let obj = { here: { is: "an" }, object: 2 };
+// console.log(deepEqual(obj, obj));
+// // → true
+// console.log(deepEqual(obj, { here: 1, object: 2 }));
+// // → false
+// console.log(deepEqual(obj, { here: { is: "an" }, object: 2 }));
+// // → true
+
+// Going over the chapter one more time, specially the Weresquirell parts to get even more comfortable with data structures
+// let sequence = [1, 2, 3];
+// sequence.push(4);
+// sequence.push(5);
+// sequence.pop();
+// console.log(sequence);
+
+// let day1 = {
+//   squirell: false,
+//   events: ["work", "touched tree", "pizza", "running"],
+// };
+
+// console.log(day1.squirell);
+// console.log(day1.wolf);
+// day1.wolf = false;
+// console.log(day1.wolf);
+
+// let descriptions = {
+//   work: "went to work",
+//   "touched tree": "Touched a tree",
+// };
+
+// let anObject = { left: 1, right: 2 };
+// console.log(anObject.left);
+// // 1
+// delete anObject.left;
+// console.log(anObject.left);
+// // undefined
+// console.log("left" in anObject);
+// // false
+// console.log("right" in anObject);
+// // true
+
+// console.log(Object.keys({ x: 0, y: 0, z: 2 }));
+
+// let objectA = { a: 1, b: 2 };
+// Object.assign(objectA, { b: 3, c: 4 }, { b: 55 });
+// console.log(objectA);
+
+// let journal = [
+//   { events: ["work", "pizza", "running", "touched tree"], squirell: false },
+// ];
+
+// let object1 = { value: 10 };
+// let object2 = object1;
+// let object3 = { value: 10 };
+
+// console.log(object1 === object2);
+// // This will return true since both the variables are pointing to the same object
+// console.log(object1 === object3);
+// // This will return false as they are both pointing to different objects. So in JavaScript, the equal operator returns true if both the variables point to the same object, if not then it returns false
+
+// object1.value = 15;
+// console.log(object2.value);
+// // 15
+// console.log(object3.value);
+// // 10
+
+// const score = { visitors: 0, home: 0 };
+// // score.visitors = 1;
+// score = { visitors: 1, home: 0 };
+// // The above statement will cause an error as we cannot reassign an object when it is declared with const. The above will work however if we were to declare the object and bind it to score using the let keyword. The contents of the objects remain mutable when using const.
+// console.log(score);
+
+// let { name } = { name: "Alabhya", age: 23 };
+// console.log(name);
+
+// let journal = [];
+// function addEntry(events, squirrel) {
+//   journal.push({ events, squirrel });
+// }
+
+// addEntry(["work", "touched tree", "pizza", "running", "television"], false);
+// // console.log(journal);
+
+// function phi([n00, n01, n10, n11]) {
+//   return (
+//     (n11 * n00 - n10 * n01) /
+//     Math.sqrt((n10 + n11) * (n00 + n01) * (n01 + n11) * (n00 + n10))
+//   );
+// }
+// // console.log(phi([76, 9, 4, 1]));
+
+// function tableFor(event, journal) {
+//   let table = [0, 0, 0, 0];
+//   for (let i = 0; i < journal.length; i++) {
+//     let entry = journal[i],
+//       index = 0;
+//     if (entry.events.includes(event)) index += 1;
+//     if (entry.squirrel) index += 2;
+//     table[index] += 1;
+//   }
+//   return table;
+// }
+
+// // console.log(tableFor("pizza", JOURNAL));
+
+// function journalEvents(journal) {
+//   let events = [];
+//   for (let entry of journal) {
+//     for (let event of entry.events) {
+//       if (!events.includes(event)) {
+//         events.push(event);
+//       }
+//     }
+//   }
+//   return events;
+// }
+
+// // console.log(journalEvents(JOURNAL));
+
+// // for (let event of journalEvents(JOURNAL)) {
+// //   let correlations = phi(tableFor(event, JOURNAL));
+// //   if (correlations > 0.1 || correlations < -0.1) {
+// //     console.log(event + ":", correlations);
+// //   }
+// // }
+
+// for (entry of JOURNAL) {
+//   if (
+//     entry.events.includes("peanuts") &&
+//     !entry.events.includes("brushed teeth")
+//   ) {
+//     entry.events.push("peanut teeth");
+//   }
+// }
+
+// console.log(phi(tableFor("peanut teeth", JOURNAL)));
+
+// Attempting Deep Equal again after looking at the solution provided by the author
+const deepEqual = function (a, b) {
+  if (a === b) return true;
+  if (a == null || typeof a != "object" || b == null || typeof b != "object")
+    return false;
+  let keysA = Object.keys(a),
+    keysB = Object.keys(b);
+  for (let key of keysA) {
+    if (!keysB.includes(key) || !deepEqual(keysA[key], keysB[key]))
+      return false;
   }
+  return true;
 };
 
-const obj1 = { here: { is: "an" }, object: 2 };
-const obj2 = { here: { is: "an" }, object: 2 };
-console.log(deepEqual(obj1, obj2));
+let obj = { here: { is: "an" }, object: 2 };
+console.log(deepEqual(obj, obj));
+// → true
+console.log(deepEqual(obj, { here: 1, object: 2 }));
+// → false
+console.log(deepEqual(obj, { here: { is: "an" }, object: 2 }));
+// → true
