@@ -84,7 +84,7 @@ function unless(test, then) {
 
 // [1, 2, 3, 4, 5].forEach((x) => console.log(x * 2));
 
-const SCRIPTS = require("./support/scripts.js");
+const SCRIPTS = require('./support/scripts.js');
 
 // function filter(array, test) {
 //   let result = [];
@@ -106,7 +106,7 @@ function map(array, transform) {
   return mapped;
 }
 
-let rtlScrips = SCRIPTS.filter((s) => s.direction == "rtl");
+let rtlScrips = SCRIPTS.filter((s) => s.direction == 'rtl');
 // The below statement takes the array element and performs the function provided. In this case, it pushes the value of name of the current element to the array which will be returned.
 // console.log(map(rtlScrips, (s) => s.name));
 
@@ -135,8 +135,101 @@ function characterCount(script) {
   }, 0);
 }
 
-console.log(
-  SCRIPTS.reduce((a, b) => {
-    return characterCount(a) < characterCount(b) ? b : a;
-  })
-);
+// console.log(
+//   SCRIPTS.reduce((a, b) => {
+//     return characterCount(a) < characterCount(b) ? b : a;
+//   })
+// );
+
+// let biggest = null;
+// for (let script of SCRIPTS) {
+//   if (biggest == null || characterCount(biggest) < characterCount(script)) {
+//     biggest = script;
+//   }
+// }
+
+// console.log(biggest.name);
+
+function average(array) {
+  return array.reduce((a, b) => a + b) / array.length;
+}
+
+// Average origin year for living languages
+// console.log(
+//   Math.round(average(SCRIPTS.filter((s) => s.living).map((s) => s.year)))
+// );
+
+// console.log(Math.round(average(SCRIPTS.filter(s ))))
+// console.log(SCRIPTS.filter((s) => s.living).map((s) => s.year));
+
+// Average origin year for dead languages
+// console.log(
+//   Math.round(average(SCRIPTS.filter((s) => !s.living).map((s) => s.year)))
+// );
+
+let total = 0,
+  count = 0;
+for (let script of SCRIPTS) {
+  if (script.living) {
+    total += script.year;
+    count++;
+  }
+}
+
+// console.log(Math.round(total / count));
+
+function characterScript(code) {
+  for (let script of SCRIPTS) {
+    if (
+      script.ranges.some(([from, to]) => {
+        return code >= from && code < to;
+      })
+    ) {
+      return script;
+    }
+  }
+  return null;
+}
+
+// console.log(characterScript(121));
+
+let horseShoe = '🐴👟';
+// console.log(horseShoe);
+// console.log(horseShoe.length);
+// console.log(horseShoe[0]);
+// console.log(horseShoe.charCodeAt(0));
+// console.log(horseShoe.codePointAt(0));
+
+let roseDragon = '🌹🐉';
+// for (let char of roseDragon) {
+//   console.log(char);
+// }
+// console.log(roseDragon.codePointAt(2));
+
+function countBy(items, groupName) {
+  let counts = [];
+  for (let item of items) {
+    let name = groupName(item);
+    let known = counts.findIndex((c) => c.name == name);
+    if (known == -1) {
+      counts.push({ name, count: 1 });
+    } else {
+      counts[known].count++;
+    }
+  }
+  return counts;
+}
+
+// console.log(countBy([1, 2, 3, 4, 5], (n) => n > 2));
+
+function textScripts(text) {
+  let scripts = countBy(text, (char) => {
+    let script = characterScript(char.codePointAt(0));
+    return script ? script.name : 'none';
+  });
+
+  return scripts;
+}
+
+console.log(textScripts('英国的狗说"woof", 俄罗斯的狗说"тяв"'));
+// → 61% Han, 22% Latin, 17% Cyrillic
