@@ -246,3 +246,33 @@ let arrays = [[1, 2, 3], [4, 5], [6]];
 // console.log(arrays.reduce((a, b) => a.concat(b)));
 
 // Your Own Loop
+
+// My solution
+// const loop = function (value, test, update, body) {
+//   if (update(0) < 0) {
+//     for (let i = value; i > 0; i--) {
+//       if (!test(i)) return;
+//       body(i);
+//       update(i);
+//     }
+//   } else {
+//     for (let i = 0; i < value; i++) {
+//       if (!test(i)) return;
+//       body(i);
+//       update(i);
+//     }
+//   }
+// };
+
+// Solution provided by the author
+function loop(start, test, update, body) {
+  for (let value = start; test(value); value = update(value)) {
+    body(value);
+  }
+}
+loop(
+  3,
+  (n) => n > 0,
+  (n) => n - 1,
+  console.log
+);
