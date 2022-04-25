@@ -270,9 +270,67 @@ function loop(start, test, update, body) {
     body(value);
   }
 }
-loop(
-  3,
-  (n) => n > 0,
-  (n) => n - 1,
-  console.log
-);
+// loop(
+//   3,
+//   (n) => n > 0,
+//   (n) => n - 1,
+//   console.log
+// );
+
+// Everything
+
+// First version using a loop
+// function every(array, test) {
+//   let count = 0;
+//   for (let item of array) {
+//     if (test(item)) {
+//       count++;
+//     }
+//   }
+//   return count === array.length;
+// }
+
+// Second version using the some method. I don't like the edge case where the empty array returns true. It would be much better if the function returns false. That's what my function does below but I have added an if condition at the start to comply with the author's expected answer to the solution. I'll be now looking at the solution provided by the author. This is getting slightly demoralizing because even if I write a working solution, the author's solution is way cleaner.
+// function every(array, test) {
+//   if (array.length === 0) return true;
+//   return array.some((element, index) => {
+//     return index === array.length - 1 && test(element);
+//   });
+// }
+
+// Author's solution, first version
+// function every(array, predicate) {
+//   for (let item of array) {
+//     if (!predicate(item)) return false;
+//   }
+//   return true;
+// }
+
+// Author's solution, second version
+// function every(array, predicate) {
+//   return !array.some((element) => !predicate(element));
+// }
+
+// console.log(every([1, 3, 5], (n) => n < 10));
+// // → true
+// console.log(every([2, 4, 16], (n) => n < 10));
+// → false
+// console.log(every([], (n) => n < 10));
+// // → true
+
+// Attempting the exercise again after looking at the Author's solution and hints.
+
+// Loop based version
+// function every(array, predicate) {
+//   for (let item of array) {
+//     if (!predicate(item)) return false;
+//   }
+//   return true;
+// }
+
+function every(array, predicate) {
+  return !array.some((element) => !predicate(element));
+}
+
+console.log(every([2, 4, 16], (n) => n < 10));
+// → false
