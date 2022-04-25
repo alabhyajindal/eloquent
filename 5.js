@@ -332,5 +332,67 @@ function every(array, predicate) {
   return !array.some((element) => !predicate(element));
 }
 
-console.log(every([2, 4, 16], (n) => n < 10));
+// console.log(every([2, 4, 16], (n) => n < 10));
 // → false
+
+// Dominant Writing Direction
+
+// Completed the assignment to my liking successfully on the first attempt!
+function characterScript(code) {
+  for (let script of SCRIPTS) {
+    if (
+      script.ranges.some(([from, to]) => {
+        return code >= from && code < to;
+      })
+    ) {
+      return script;
+    }
+  }
+  return null;
+}
+
+function countBy(items, groupName) {
+  let counts = [];
+  for (let item of items) {
+    let name = groupName(item);
+    let known = counts.findIndex((c) => c.name == name);
+    if (known == -1) {
+      counts.push({ name, count: 1 });
+    } else {
+      counts[known].count++;
+    }
+  }
+  return counts;
+}
+
+// function dominantDirection(text) {
+//   let scripts = countBy(text, (char) => {
+//     let script = characterScript(char.codePointAt(0));
+//     return script ? script.name : 'none';
+//   }).filter((s) => s.name != 'none');
+
+//   let max = scripts.reduce((previous, current) => {
+//     return previous.count > current.count ? previous : current;
+//   });
+
+//   return SCRIPTS.find((script) => script.name === max.name).direction;
+// }
+
+// Solution provided by the author
+function dominantDirection(text) {
+  let counted = countBy(text, (char) => {
+    let script = characterScript(char.codePointAt(0));
+    return script ? script.direction : 'none';
+  }).filter(({ name }) => name != 'none');
+
+  if (counted.length == 0) return 'ltr';
+
+  return counted.reduce((prev, current) => {
+    return (prev.count > current.count ? prev : current).name;
+  });
+}
+
+// console.log(dominantDirection('Hello!'));
+// → ltr
+console.log(dominantDirection('Hey, مساء الخير'));
+// → rtl
