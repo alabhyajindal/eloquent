@@ -155,3 +155,92 @@ let stringObject = {
 };
 
 // console.log(stringObject[toStringSymbol]());
+
+// Getters, Setters, and Statics
+let varyingSize = {
+  get size() {
+    return Math.floor(Math.random() * 100);
+  },
+};
+
+// console.log(varyingSize.size);
+// console.log(varyingSize.size);
+
+class Temperature {
+  constructor(celsius) {
+    this.celsius = celsius;
+  }
+  get fahrenheit() {
+    return this.celsius * 1.8 + 32;
+  }
+  set fahrenheit(value) {
+    this.celsius = (value - 32) / 1.8;
+  }
+  static fromFahrenheit(value) {
+    return new Temperature((value - 32) / 1.8);
+  }
+}
+
+// let temp = new Temperature(22);
+// console.log(temp.fahrenheit);
+// temp.fahrenheit = 86;
+// console.log(temp.celsius);
+
+// let temp = new Temperature(22);
+// console.log(temp.fahrenheit);
+// temp = Temperature.fromFahrenheit(86);
+// console.log(temp.celsius);
+
+// The Iterator Interface
+
+// let okIterator = 'OK'[Symbol.iterator]();
+// console.log(okIterator.next());
+// console.log(okIterator.next());
+// console.log(okIterator.next());
+
+// A two-dimensional array
+// let arr = [
+//   [1, 2],
+//   [3, 4],
+//   [5, 6],
+// ];
+
+// console.log(arr[0]);
+
+// Function to create a matrix
+// function createMatrix(height, width, value) {
+//   let main = [];
+//   for (let i = 0; i < height; i++) {
+//     main.push([]);
+//     for (let j = 0; j < width; j++) {
+//       main[i].push(value);
+//     }
+//   }
+//   return main;
+// }
+
+// let matrix = createMatrix(4, 3, 7);
+// console.log(matrix);
+
+class Matrix {
+  constructor(width, height, element = (x, y) => undefined) {
+    this.width = width;
+    this.height = height;
+    this.content = [];
+
+    for (let y = 0; y < height; y++) {
+      for (let x = 0; x < width; x++) {
+        this.content[y * width + x] = element(x, y);
+      }
+    }
+  }
+  get(x, y) {
+    return this.content[y * this.width + x];
+  }
+  set(x, y, value) {
+    this.content[y * this.width + x] = value;
+  }
+}
+
+let matrix = new Matrix(2, 3, (x, y) => `value ${x}, ${y}`);
+console.log(matrix);
