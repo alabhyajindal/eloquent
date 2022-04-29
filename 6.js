@@ -222,25 +222,30 @@ class Temperature {
 // let matrix = createMatrix(4, 3, 7);
 // console.log(matrix);
 
-class Matrix {
-  constructor(width, height, element = (x, y) => undefined) {
-    this.width = width;
-    this.height = height;
-    this.content = [];
+// A Vector Type
 
-    for (let y = 0; y < height; y++) {
-      for (let x = 0; x < width; x++) {
-        this.content[y * width + x] = element(x, y);
-      }
-    }
-  }
-  get(x, y) {
-    return this.content[y * this.width + x];
-  }
-  set(x, y, value) {
-    this.content[y * this.width + x] = value;
-  }
-}
+// class Vec {
+//   constructor(x, y) {
+//     this.x = x;
+//     this.y = y;
+//   }
+//   plus(other) {
+//     return new Vec(this.x + other.x, this.y + other.y);
+//   }
+//   minus(other) {
+//     return new Vec(this.x - other.x, this.y - other.y);
+//   }
+//   get length() {
+//     return Math.sqrt(this.x * this.x + this.y * this.y);
+//   }
+// }
 
-let matrix = new Matrix(2, 3, (x, y) => `value ${x}, ${y}`);
-console.log(matrix);
+// console.log(new Vec(1, 2).plus(new Vec(2, 3)));
+// console.log(new Vec(1, 2).minus(new Vec(2, 3)));
+// console.log(new Vec(3, 4).length);
+
+// let foo = new Vec(1, 2);
+// console.log(foo);
+// let addedVal = foo.plus(new Vec(2, 3));
+// console.log(foo);
+// console.log(addedVal);
