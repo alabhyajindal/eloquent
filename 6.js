@@ -330,7 +330,57 @@ class SymmetricMatrix extends Matrix {
 let matrix = new SymmetricMatrix(5, (x, y) => `${x}, ${y}`);
 // console.log(matrix.get(2, 3));
 
-console.log(new SymmetricMatrix(2) instanceof SymmetricMatrix);
-console.log(new SymmetricMatrix(2) instanceof Matrix);
-console.log(new Matrix(2, 2) instanceof SymmetricMatrix);
-console.log([1] instanceof Array);
+// console.log(new SymmetricMatrix(2) instanceof SymmetricMatrix);
+// console.log(new SymmetricMatrix(2) instanceof Matrix);
+// console.log(new Matrix(2, 2) instanceof SymmetricMatrix);
+// console.log([1] instanceof Array);
+
+// Groups
+
+class Group {
+  constructor(group = []) {
+    this.group = group;
+  }
+
+  has(value) {
+    if (this.group.includes(value)) return true;
+    return false;
+  }
+
+  add(value) {
+    if (!this.has(value)) {
+      this.group.push(value);
+    }
+  }
+
+  delete(value) {
+    if (this.has(value)) {
+      let newGroup = this.group.filter((item) => item != value);
+      this.group = newGroup;
+    }
+  }
+
+  static from(values) {
+    if (Symbol.iterator in values) {
+      for (let item of values) {
+        this.prototype.add(item);
+      }
+    }
+  }
+}
+
+// Getting undefined on the has method because has refrences the the group variable created in the constructor function. But since we are using a static method to instantiate, the constructor has not been used.
+
+let group = Group.from([10, 20]);
+console.log(group);
+// console.log(group.has(10));
+// → true
+
+// const group = new Group();
+// group.add(2);
+// group.add(3);
+// group.add(2);
+// group.add(77);
+// console.log(group);
+// group.delete(77);
+// console.log(group);
