@@ -337,53 +337,6 @@ let matrix = new SymmetricMatrix(5, (x, y) => `${x}, ${y}`);
 
 // Groups
 
-// class Group {
-//   constructor() {
-//     this.members = [];
-//   }
-
-//   has(value) {
-//     return this.members.includes(value);
-//   }
-
-//   add(value) {
-//     if (!this.has(value)) {
-//       this.members.push(value);
-//     }
-//   }
-
-//   delete(value) {
-//     if (this.has(value)) {
-//       let newGroup = this.members.filter((item) => item != value);
-//       this.members = newGroup;
-//     }
-//   }
-
-//   static from(collection) {
-//     if (Symbol.iterator in collection) {
-//       let group = new Group();
-//       for (let value of collection) {
-//         group.add(value);
-//       }
-//       return group;
-//     }
-//   }
-// }
-
-// Learn why `this` does not work on the static method. It should work because `this` will point to the Class, and the other methods are defined inside the class. Find out what is wrong in the previous argument.
-
-// let group = Group.from([10, 20]);
-// console.log(group.has(10));
-// // → true
-// console.log(group.has(30));
-// // → false
-// group.add(10);
-// group.delete(10);
-// console.log(group.has(10));
-// // → false
-
-// Iterable Groups
-
 class Group {
   constructor() {
     this.members = [];
@@ -415,31 +368,80 @@ class Group {
       return group;
     }
   }
-
-  [Symbol.iterator]() {
-    return new GroupIterator(this);
-  }
 }
 
-class GroupIterator {
-  constructor(group) {
-    this.group = group;
-    this.position = 0;
-  }
+// Learn why `this` does not work on the static method. It should work because `this` will point to the Class, and the other methods are defined inside the class. Find out what is wrong in the previous argument.
 
-  next() {
-    if (this.position >= this.group.members.length) return { done: true };
-    else {
-      let result = { done: false, value: this.group.members[this.position] };
-      this.position++;
-      return result;
-    }
-  }
-}
+// `this` inside of a static method points to the Class, not the instance of a class. The method defined on the Class declaration are defined on the Class prototype and can be called on an instance created using the class. The static method is the only method that cannot be called on an instance of a class - it has to be called on a class directly.
 
-for (let value of Group.from(['a', 'b', 'c'])) {
-  console.log(value);
-}
+// let group = Group.from([10, 20]);
+// console.log(group.has(10));
+// // → true
+// console.log(group.has(30));
+// // → false
+// group.add(10);
+// group.delete(10);
+// console.log(group.has(10));
+// // → false
+
+// Iterable Groups
+
+// class Group {
+//   constructor() {
+//     this.members = [];
+//   }
+
+//   has(value) {
+//     return this.members.includes(value);
+//   }
+
+//   add(value) {
+//     if (!this.has(value)) {
+//       this.members.push(value);
+//     }
+//   }
+
+//   delete(value) {
+//     if (this.has(value)) {
+//       let newGroup = this.members.filter((item) => item != value);
+//       this.members = newGroup;
+//     }
+//   }
+
+//   static from(collection) {
+//     if (Symbol.iterator in collection) {
+//       let group = new Group();
+//       for (let value of collection) {
+//         group.add(value);
+//       }
+//       return group;
+//     }
+//   }
+
+//   [Symbol.iterator]() {
+//     return new GroupIterator(this);
+//   }
+// }
+
+// class GroupIterator {
+//   constructor(group) {
+//     this.group = group;
+//     this.position = 0;
+//   }
+
+//   next() {
+//     if (this.position >= this.group.members.length) return { done: true };
+//     else {
+//       let result = { done: false, value: this.group.members[this.position] };
+//       this.position++;
+//       return result;
+//     }
+//   }
+// }
+
+// for (let value of Group.from(['a', 'b', 'c'])) {
+//   console.log(value);
+// }
 // → a
 // → b
 // → c
