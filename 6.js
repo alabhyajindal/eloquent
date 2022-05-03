@@ -338,49 +338,46 @@ let matrix = new SymmetricMatrix(5, (x, y) => `${x}, ${y}`);
 // Groups
 
 class Group {
-  constructor(group = []) {
-    this.group = group;
+  constructor() {
+    this.members = [];
   }
 
   has(value) {
-    if (this.group.includes(value)) return true;
-    return false;
+    return this.members.includes(value);
   }
 
   add(value) {
     if (!this.has(value)) {
-      this.group.push(value);
+      this.members.push(value);
     }
   }
 
   delete(value) {
     if (this.has(value)) {
-      let newGroup = this.group.filter((item) => item != value);
-      this.group = newGroup;
+      let newGroup = this.members.filter((item) => item != value);
+      this.members = newGroup;
     }
   }
 
-  static from(values) {
-    if (Symbol.iterator in values) {
-      for (let item of values) {
-        this.prototype.add(item);
+  static from(collection) {
+    if (Symbol.iterator in collection) {
+      let group = new Group();
+      for (let value of collection) {
+        group.add(value);
       }
+      return group;
     }
   }
 }
 
-// Getting undefined on the has method because has refrences the the group variable created in the constructor function. But since we are using a static method to instantiate, the constructor has not been used.
+// Learn why `this` does not work on the static method. It should work because `this` will point to the Class, and the other methods are defined inside the class. Find out what is wrong in the previous argument.
 
 let group = Group.from([10, 20]);
-console.log(group);
-// console.log(group.has(10));
+console.log(group.has(10));
 // → true
-
-// const group = new Group();
-// group.add(2);
-// group.add(3);
-// group.add(2);
-// group.add(77);
-// console.log(group);
-// group.delete(77);
-// console.log(group);
+console.log(group.has(30));
+// → false
+group.add(10);
+group.delete(10);
+console.log(group.has(10));
+// → false
