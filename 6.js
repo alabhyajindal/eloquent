@@ -415,31 +415,27 @@ class Group {
       return group;
     }
   }
+
+  [Symbol.iterator]() {
+    return new GroupIterator(this);
+  }
 }
 
 class GroupIterator {
-  constructor(collection) {
-    this.collection = collection;
-    this.members = collection.members;
-    this.length = collection.members.length;
-    this.count = 0;
-    this.index = -1;
+  constructor(group) {
+    this.group = group;
+    this.position = 0;
   }
 
   next() {
-    if (this.count < this.length) {
-      this.count++;
-      this.index++;
-      return { done: false, value: this.members[this.index] };
-    } else {
-      return { done: true, value: undefined };
+    if (this.position >= this.group.members.length) return { done: true };
+    else {
+      let result = { done: false, value: this.group.members[this.position] };
+      this.position++;
+      return result;
     }
   }
 }
-
-Group.prototype[Symbol.iterator] = function () {
-  return new GroupIterator(this);
-};
 
 for (let value of Group.from(['a', 'b', 'c'])) {
   console.log(value);
