@@ -1,6 +1,6 @@
 // const obj = { left: 1, right: undefined };
 
-// const JOURNAL = require("./support/journal.js");
+// const JOURNAL = require("./Data Structures/journal.js");
 
 // console.log(Object.keys(obj));
 
@@ -418,7 +418,7 @@ const deepEqual = function (a, b) {
   // If the values compare directly then true is returned
   if (a === b) return true;
   // If the value is null or if the value is not an object then false is returned. We are checking if the value is not an object and returning false because if it's not and is equal then it would have returned true above.
-  if (a == null || typeof a != "object" || b == null || typeof b != "object")
+  if (a == null || typeof a != 'object' || b == null || typeof b != 'object')
     return false;
   // Assigning the keys of both parameters for easier readability
   let keysA = Object.keys(a),
@@ -437,6 +437,6 @@ const deepEqual = function (a, b) {
   return true;
 };
 
-let obj = { here: { is: "an" }, object: 2 };
+let obj = { here: { is: 'an' }, object: 2 };
 console.log(deepEqual(obj, { here: 1, object: 2 }));
 // → false

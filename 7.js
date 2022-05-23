@@ -1,3 +1,5 @@
+// 'use strict';
+
 const roads = [
   "Alice's House-Bob's House",
   "Alice's House-Cabin",
@@ -25,7 +27,7 @@ function buildGraph(edges) {
     }
   }
 
-  for ([from, to] of edges.map((road) => road.split('-'))) {
+  for (let [from, to] of edges.map((road) => road.split('-'))) {
     addEdge(from, to);
     addEdge(to, from);
   }
@@ -64,7 +66,49 @@ let first = new VillageState('Post Office', [
 
 let next = first.move("Alice's House");
 
-console.log(next.place);
-console.log(next.parcels);
-console.log(first.place);
-console.log(first.parcels);
+// console.log(next.place);
+// console.log(next.parcels);
+// console.log(first.place);
+// console.log(first.parcels);
+
+// let object = Object.freeze({ value: 5 });
+// This throws an error in strict mode
+// object.value = 10;
+// console.log(object.value);
+
+function runRobot(state, robot, memory) {
+  for (let turn = 0; ; turn++) {
+    if (state.parcels.length == 0) {
+      console.log(`Done in ${turn} turns`);
+      break;
+    }
+    let action = robot(state, memory);
+    state = state.move(action.direction);
+    memory = action.memory;
+    console.log(`Moved to ${action.direction}`);
+  }
+}
+
+function randomPick(array) {
+  let choice = Math.floor(Math.random() * array.length);
+  return array[choice];
+}
+
+function randomRobot(state) {
+  return { direction: randomPick(roadGraph[state.place]) };
+}
+
+VillageState.random = function (parcelCount = 5) {
+  let parcels = [];
+  for (let i = 0; i < parcelCount; i++) {
+    let address = randomPick(Object.keys(roadGraph));
+    let place;
+    do {
+      place = randomPick(Object.keys(roadGraph));
+    } while (place == address);
+    parcels.push({ place, address });
+  }
+  return new VillageState('Post Office', parcels);
+};
+
+runRobot(VillageState.random(), randomRobot);

@@ -84,7 +84,7 @@ function unless(test, then) {
 
 // [1, 2, 3, 4, 5].forEach((x) => console.log(x * 2));
 
-const SCRIPTS = require('./support/scripts.js');
+const SCRIPTS = require('./Higer-order Functions/scripts.js');
 
 // function filter(array, test) {
 //   let result = [];
