@@ -219,4 +219,38 @@ function efficientRobot({ place, parcels }, route) {
   return { direction: route[0], memory: route.slice(1) };
 }
 
-compareRobots(goalOrientedRobot, [], efficientRobot, []);
+// compareRobots(goalOrientedRobot, [], efficientRobot, []);
+
+// Persistent Group
+class PGroup {
+  constructor(members) {
+    this.members = members;
+  }
+
+  add(value) {
+    if (this.has(value)) return this;
+    return new PGroup([...this.members, value]);
+  }
+
+  delete(value) {
+    if (!this.has(value)) return this;
+    return new PGroup(this.members.filter((member) => member !== value));
+  }
+
+  has(value) {
+    return this.members.includes(value);
+  }
+}
+
+PGroup.empty = new PGroup([]);
+
+let a = PGroup.empty.add('a');
+let ab = a.add('b');
+let b = ab.delete('a');
+
+console.log(b.has('b'));
+// → true
+console.log(a.has('b'));
+// → false
+console.log(b.has('a'));
+// → false
