@@ -145,15 +145,49 @@ function goalOrientedRobot({ place, parcels }, route) {
     if (parcel.place != place) {
       route = findRoute(roadGraph, place, parcel.place);
     } else {
-      route = findRoute(roadGraph, place, parcel, address);
+      route = findRoute(roadGraph, place, parcel.address);
     }
   }
   return { direction: route[0], memory: route.slice(1) };
 }
 
 // Measuring a Robot
+
+function stepsCounter(robot, memory, state) {
+  let steps = 0;
+  for (let turn = 0; ; turn++) {
+    if (state.parcels.length == 0) {
+      return steps;
+    }
+    let action = robot(state, memory);
+    state = state.move(action.direction);
+    memory = action.memory;
+    steps++;
+  }
+}
+
 function compareRobots(robot1, memory1, robot2, memory2) {
-  // Todo
+  const robot1Steps = [];
+  const robot2Steps = [];
+  for (let i = 0; i < 100; i++) {
+    const state = VillageState.random();
+    robot1Steps.push(stepsCounter(robot1, memory1, state));
+    robot2Steps.push(stepsCounter(robot2, memory2, state));
+  }
+
+  const avr1 =
+    robot1Steps.reduce((prev, current) => {
+      return prev + current;
+    }) / 100;
+
+  console.log(`Robot 1 took ${avr1} steps on average`);
+
+  const avr2 =
+    robot2Steps.reduce((prev, current) => {
+      return prev + current;
+    }) / 100;
+
+  console.log(`Robot 2 took ${avr2} steps on average`);
 }
 
 compareRobots(routeRobot, [], goalOrientedRobot, []);
