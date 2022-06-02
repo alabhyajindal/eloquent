@@ -179,4 +179,44 @@ function compareRobots(robot1, memory1, robot2, memory2) {
   console.log(`Robot 2 took ${robot2Steps / 100} steps on average`);
 }
 
-compareRobots(routeRobot, [], goalOrientedRobot, []);
+// compareRobots(routeRobot, [], goalOrientedRobot, []);
+
+// Robot Efficiency
+
+function goalOrientedRobot({ place, parcels }, route) {
+  if (route.length == 0) {
+    let parcel = parcels[0];
+    if (parcel.place != place) {
+      route = findRoute(roadGraph, place, parcel.place);
+    } else {
+      route = findRoute(roadGraph, place, parcel.address);
+    }
+  }
+  return { direction: route[0], memory: route.slice(1) };
+}
+
+// The goalOrientedRobot does go out of it's way to pick up parcels if it is carrying a parcel already. However it does pick up parcels if it finds them crossing it's path even when it has a parcel in hand.
+function efficientRobot({ place, parcels }, route) {
+  if (route.length === 0) {
+    let routes = parcels.map((parcel) => {
+      if (parcel.place != place) {
+        return {
+          route: findRoute(roadGraph, place, parcel.place),
+          pickUp: true,
+        };
+      } else {
+        return {
+          route: findRoute(roadGraph, place, parcel.address),
+          pickUp: false,
+        };
+      }
+    });
+    function score({ route, pickUp }) {
+      return (pickUp ? 0.5 : 0) - route.length;
+    }
+    route = routes.reduce((a, b) => (score(a) > score(b) ? a : b)).route;
+  }
+  return { direction: route[0], memory: route.slice(1) };
+}
+
+compareRobots(goalOrientedRobot, [], efficientRobot, []);
