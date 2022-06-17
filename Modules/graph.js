@@ -1,5 +1,3 @@
-module.exports = buildGraph;
-
 function buildGraph(roads) {
   let graph = {};
   let edges = [];
@@ -13,3 +11,5 @@ function buildGraph(roads) {
   }
   return graph;
 }
+
+module.exports = buildGraph;
