@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>API Request</title>
+  </head>
+  <body>
+    <script>
+      function getData() {
+        return new Promise((resolve, reject) => {
+          const url = 'http://localhost:8000';
+          fetch(url, {
+            method: 'GET',
+            headers: { 'Content-Type': 'text/html' },
+            mode: 'no-cors',
+          })
+            .then((res) => res)
+            .then((data) => {
+              console.log(data);
+            });
+        });
+      }
+
+      getData();
+    </script>
+  </body>
+</html>
